@@ -37,6 +37,7 @@ export async function signup(req, res) {
 
     //hashing password
     const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const PROFILE_PICS = [
       'https://randomuser.me/api/portraits/men/1.jpg',
@@ -50,7 +51,7 @@ export async function signup(req, res) {
     const newUser = new User({
       username: username,
       email: email,
-      password: password,
+      password: hashedPassword,
       image: image,
     });
     // Save the signed up user to the db
